@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Agenda do Barbeiro</title>
+
+<style>
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+h2{
+    color:#e60000;
+    margin:20px 0;
+    text-align:center;
+}
+
+.card{
+    background:#111;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:12px;
+    box-shadow:0 0 12px rgba(255,0,0,.25);
+}
+
+.hora{
+    font-size:18px;
+    font-weight:bold;
+    color:#e60000;
+    margin-bottom:5px;
+}
+
+.cliente{
+    margin-top:4px;
+    font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Agenda do Barbeiro</h1>
+<h2>📅 Hoje — {{ hoje }}</h2>
+
+{% if agendamentos %}
+
+    {% for a in agendamentos %}
+        <div class="card">
+            <div class="hora">⏰ {{ a[0] }}</div>
+            <div class="cliente">👤 {{ a[2] }}</div>
+            <div>📞 {{ a[3] }}</div>
+            <div>✂️ {{ a[1] }}</div>
+
+            <a href="/barbeiro-cancelar/{{ a[0] }}"
+                style="
+                display:inline-block;
+                margin-top:10px;
+                background:#e60000;
+                color:white;
+                padding:8px 14px;
+                border-radius:8px;
+                text-decoration:none;
+                font-weight:bold;">
+                ❌ Cancelar horário
+            </a>
+        </div>
+    {% endfor %}
+
+{% else %}
+    <p style="text-align:center; color:#aaa;">
+        Nenhum horário agendado para hoje.
+    </p>
+{% endif %}
+
+</body>
+</html>

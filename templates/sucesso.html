@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sucesso</title>
+
+<style>
+body{
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    font-family:Arial;
+}
+
+.container{
+    position:relative;
+    background:#0f0f0f;
+    padding:90px 25px 25px;
+    width:100%;
+    max-width:380px;
+    border-radius:20px;
+    text-align:center;
+    color:white;
+}
+
+.logo{
+    position:absolute;
+    top:-70px;
+    left:50%;
+    transform:translateX(-50%);
+    width:120px;
+}
+
+a{
+    display:block;
+    margin-top:15px;
+    padding:12px;
+    background:#e60000;
+    border-radius:10px;
+    color:white;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+
+<h2>Agendamento realizado</h2>
+<p>Te esperamos! 💈</p>
+
+<a href="/agendamento">Novo horário</a>
+</div>
+
+</body>
+</html>

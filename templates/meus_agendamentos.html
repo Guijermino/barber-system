@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Meus Agendamentos</title>
+<style>
+body{background:#000;color:#fff;font-family:Arial;padding:20px;}
+.card{
+    background:#111;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<h2>Meus Agendamentos</h2>
+
+{% for a in agendamentos %}
+<div class="card">
+    <div>📅 {{ a[1] }} ⏰ {{ a[2] }}</div>
+    <div>✂️ {{ a[3] }}</div>
+</div>
+{% endfor %}
+
+<a href="/agendamento">Voltar</a>
+
+</body>
+</html>

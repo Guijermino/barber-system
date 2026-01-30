@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro | Barber Shop Mathias</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#000;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+
+.box{
+    width:100%;
+    max-width:420px;
+    background:rgba(17,17,17,.95);
+    padding:18px;
+    border-radius:18px;
+    color:#fff;
+    box-shadow:0 0 25px rgba(230,0,0,.25);
+}
+
+
+.logo{
+    position:absolute;
+    top: -67px;
+    left:50%;
+    transform:translateX(-50%);
+    width:140px;
+}
+
+.logo-wrapper{
+    position:absolute;
+    top:-13px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+}
+
+.box{
+    width:100%;
+    max-width:420px;
+    background:#111;
+    padding:22px;
+    padding-top:110px; 
+    border-radius:16px;
+    box-shadow:0 0 25px rgba(255,0,0,.25);
+    position:relative;
+}
+
+
+fieldset{
+    border:2px solid #e60000;
+    border-radius:12px;
+    padding:15px;
+}
+
+legend{
+    border:1px solid #e60000;
+    padding:8px 14px;
+    text-align:center;
+    background:#e60000;
+    border-radius:8px;
+    color:#fff;
+}
+
+
+.inputBox{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.inputUser{
+    background:none;
+    border:none;
+    border-bottom:1px solid #fff;
+    outline:none;
+    color:#fff;
+    font-size:15px;
+    width:100%;
+}
+
+.labelInput{
+    position:absolute;
+    top:0;
+    left:0;
+    pointer-events:none;
+    transition:.3s;
+    color:#aaa;
+}
+
+.inputUser:focus ~ .labelInput,
+.inputUser:valid ~ .labelInput{
+    top:-18px;
+    font-size:12px;
+    color:#e60000;
+}
+
+
+.radio-group{
+    margin:10px 0;
+}
+
+.radio-group label{
+    display:block;
+    margin-bottom:5px;
+}
+
+
+.data-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin:15px 0;
+}
+
+#data_nascimento{
+    background:#000;
+    border:1px solid #fff;
+    padding:8px;
+    border-radius:8px;
+    color:#fff;
+    width:55%;
+}
+
+
+#submit{
+    background:#e60000;
+    width:100%;
+    border:none;
+    padding:14px;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    border-radius:10px;
+}
+
+#submit:hover{
+    background:#cc0000;
+}
+
+input[type="radio"]{
+    accent-color:#e60000;
+}
+
+
+input:-webkit-autofill{
+    -webkit-text-fill-color:#fff !important;
+    box-shadow:0 0 0 1000px #000 inset;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="logo-wrapper">
+        <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+    </div>
+
+    <form action="/cadastro" method="POST">
+        <fieldset>
+            <legend><b>Cadastro</b></legend>
+
+            <div class="inputBox">
+                <input type="text" name="nome" class="inputUser" required>
+                <label class="labelInput">Nome completo</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="email" name="email" class="inputUser" required>
+                <label class="labelInput">E-mail</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="tel" name="telefone" class="inputUser" required>
+                <label class="labelInput">Telefone</label>
+            </div>
+
+            <div class="radio-group">
+                <p>Sexo:</p>
+                <label><input type="radio" name="genero" value="feminino" required> Feminino</label>
+                <label><input type="radio" name="genero" value="masculino"> Masculino</label>
+                <label><input type="radio" name="genero" value="outro"> Outro</label>
+            </div>
+
+            <div class="data-box">
+                <label>Data de nascimento</label>
+                <input type="date" name="data_nascimento" id="data_nascimento" required>
+            </div>
+
+            <div class="inputBox">
+                <input type="password" name="senha" class="inputUser" required>
+                <label class="labelInput">Senha</label>
+            </div>
+
+            <div class="inputBox">
+                <input type="password" name="confirmacao_senha" class="inputUser" required>
+                <label class="labelInput">Confirmação de senha</label>
+            </div>
+
+            <input type="submit" id="submit" value="Cadastrar">
+
+        </fieldset>
+    </form>
+
+</div>
+
+</body>
+</html>

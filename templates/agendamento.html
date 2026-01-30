@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agendamento | Barber Shop Mathias</title>
+
+<style>
+*{
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.logo-wrapper{
+    position:absolute;
+    top:-90px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:10;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+
+.container{
+    width:100%;
+    max-width:420px;
+    background:#111;
+    padding:22px;
+    padding-top:100px; 
+    border-radius:16px;
+    box-shadow:0 0 25px rgba(255,0,0,.25);
+    position:relative;
+}
+
+
+.logo{
+    width:160px;
+    display:block;
+    filter: drop-shadow(0 0 25px rgba(255,0,0,.7));
+}
+
+
+h2{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+
+.section-title{
+    margin-top:12px;
+    margin-bottom:6px;
+    font-size:14px;
+    color:#bbb;
+}
+
+
+.services{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.service{
+    flex:1;
+    background:#1a1a1a;
+    border:1px solid #333;
+    padding:12px 8px;
+    border-radius:10px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.service input{ display:none; }
+
+.service span{
+    display:block;
+    font-size:14px;
+}
+
+.service input:checked + span{
+    font-weight:bold;
+}
+
+.service input:checked + span::after{
+    content:" ✔";
+    color:#e60000;
+}
+
+.service:has(input:checked){
+    border-color:#e60000;
+    background:#220000;
+}
+
+
+input[type="date"]{
+    width:100%;
+    padding:12px;
+    border-radius:8px;
+    border:none;
+    background:#1a1a1a;
+    color:#fff;
+}
+
+
+.times{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-bottom:15px;
+}
+
+.times button{
+    padding:10px;
+    background:#1a1a1a;
+    color:#fff;
+    border:1px solid #333;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.times button:hover{
+    border-color:#e60000;
+}
+
+
+.btn-agendar{
+    width:100%;
+    padding:14px;
+    background:#e60000;
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-agendar:hover{
+    background:#cc0000;
+}
+
+
+.whatsapp{
+    display:block;
+    margin-top:15px;
+    padding:12px;
+    background:#25d366;
+    color:#000;
+    text-align:center;
+    text-decoration:none;
+    border-radius:12px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<form class="container" method="POST" action="/agendamento">
+
+    <div class="logo-wrapper">
+        <img src="{{ url_for('static', filename='logo.png') }}" class="logo">
+    </div>
+
+    <h2>Agende seu horário</h2>
+
+    <p class="section-title">Selecione os serviços</p>
+
+    <div class="services">
+        <label class="service">
+            <input type="checkbox" name="servico" value="Cabelo"
+            {% if "Cabelo" in servicos_selecionados %}checked{% endif %}> 
+            <span>✂️ Cabelo</span>
+        </label>
+
+        <label class="service">
+            <input type="checkbox" name="servico" value="Barba"
+            {% if "Barba" in servicos_selecionados %}checked{% endif %}> 
+            <span>🧔 Barba</span>
+        </label>
+
+        <label class="service">
+            <input type="checkbox" name="servico" value="Sobrancelha"
+            {% if "Sobrancelha" in servicos_selecionados %}checked{% endif %}> 
+            <span>🤨 Sobrancelha</span>
+        </label>
+    </div>
+
+    <p class="section-title">Escolha a data</p>
+    <input type="date" name="data" id="data" onchange="carregarHorarios()"
+    value="{{ data_selecionada }}" required>
+
+    <p class="section-title">Escolha o horário</p>
+
+    <div class="times">
+        <input type="hidden" name="horario" id="horario">
+
+        {% for h in horarios %}
+            <button type="button" onclick="selecionarHorario('{{ h }}')">
+                {{ h }}
+            </button>
+        {% endfor %}
+    </div>
+
+
+    <button type="submit" class="btn-agendar">Agendar horário</button>
+
+    <a class="whatsapp" href="https://wa.me/5554992381935" target="_blank">
+        💬 Falar com o barbeiro no WhatsApp
+    </a>
+
+</form>
+
+<script>
+function selecionarHorario(hora){
+    document.getElementById("horario").value = hora;
+    alert("Horário selecionado: " + hora);
+}
+
+function carregarHorarios() {
+    const data = document.getElementById("data").value;
+
+    const servicos = document.querySelectorAll("input[name='servico']:checked");
+    let params = [];
+
+    if (data) {
+        params.push("data=" + data);
+    }
+
+    servicos.forEach(s => {
+        params.push("servico=" + encodeURIComponent(s.value));
+    });
+
+    window.location = "/agendamento?" + params.join("&");
+}
+
+function selecionarHorario(hora) {
+    document.getElementById("horario").value = hora;
+
+    document.querySelectorAll(".times button").forEach(btn => {
+        btn.style.border = "1px solid #333";
+        btn.style.background = "#1a1a1a";
+    });
+
+    event.target.style.border = "2px solid #e60000";
+    event.target.style.background = "#220000";
+}
+</script>
+
+</body>
+</html>

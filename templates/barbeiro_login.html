@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login do Barbeiro</title>
+<style>
+body{
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial;
+}
+.box{
+    background:#111;
+    padding:30px;
+    border-radius:15px;
+    width:300px;
+    box-shadow:0 0 20px red;
+}
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:8px;
+    background:#1a1a1a;
+    color:white;
+}
+button{
+    width:100%;
+    padding:12px;
+    background:red;
+    border:none;
+    color:white;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+<div class="box">
+<h2 style="text-align:center;color:white;">Painel do Barbeiro</h2>
+
+<form method="POST">
+<input name="usuario" placeholder="Usuário" required>
+<input type="password" name="senha" placeholder="Senha" required>
+<button>Entrar</button>
+</form>
+</div>
+</body>
+</html>
