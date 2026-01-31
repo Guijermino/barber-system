@@ -198,7 +198,7 @@ def barbeiro():
                clientes.nome, clientes.telefone, agendamentos.id
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
-        WHERE agendamentos.data = DATE('now')
+        WHERE agendamentos.data = ?
         ORDER BY agendamentos.horario
     """, (hoje,))
 
