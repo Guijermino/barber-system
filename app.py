@@ -142,7 +142,7 @@ def esqueci_senha():
         conexao.commit()
         conexao.close()
 
-        link = f"http://127.0.0.1:5000/redefinir/{token}"
+        link = f"https://barber-system-production-8a5f.up.railway.app/redefinir/{token}"
 
         return f"""
         <h3>Link para redefinir sua senha:</h3>
@@ -195,10 +195,10 @@ def barbeiro():
 
     cursor.execute("""
         SELECT agendamentos.horario, agendamentos.servicos,
-               clientes.nome, clientes.telefone
+               clientes.nome, clientes.telefone, agendamentos.id
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
-        WHERE agendamentos.data = ?
+        WHERE agendamentos.data = DATE('now')
         ORDER BY agendamentos.horario
     """, (hoje,))
 
