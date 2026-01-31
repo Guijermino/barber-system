@@ -53,12 +53,12 @@ h2{
 
     {% for a in agendamentos %}
         <div class="card">
-            <div class="hora">⏰ {{ a[0] }}</div>
-            <div class="cliente">👤 {{ a[2] }}</div>
-            <div>📞 {{ a[3] }}</div>
-            <div>✂️ {{ a[1] }}</div>
+            <div class="hora">⏰ {{ a[1] }}</div>
+            <div class="cliente">👤 {{ a[3] }}</div>
+            <div>📞 {{ a[4] }}</div>
+            <div>✂️ {{ a[2] }}</div>
 
-            <a href="/barbeiro-cancelar/{{ a[4] }}"
+            <a href="/barbeiro-cancelar/{{ a[0] }}"
                 style="
                 display:block;
                 margin-top:10px;
