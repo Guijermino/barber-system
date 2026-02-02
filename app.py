@@ -55,15 +55,15 @@ def barbeiro_bloquear():
 
     return render_template("barbeiro_nome.html", data=data, horario=horario)
 
-@app.route("/barbeiro/salvar-manual", methods=["POST"])
-def salvar_agendamento_manual():
+@app.route("/barbeiro-salvar-bloqueio", methods=["POST"])
+def barbeiro_salvar_bloqueio():
 
     if "barbeiro" not in session:
         return redirect("/barbeiro-login")
 
-    nome = request.form.get("nome")
-    data = request.form.get("data")
-    horario = request.form.get("horario")
+    data = request.form["data"]
+    horario = request.form["horario"]
+    nome = request.form["nome"]
 
     conexao = sqlite3.connect("database.db")
     cursor = conexao.cursor()
