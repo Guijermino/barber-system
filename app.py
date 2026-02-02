@@ -53,7 +53,7 @@ def barbeiro_bloquear():
     conexao.commit()
     conexao.close()
 
-    return redirect("/barbeiro")
+    return render_template("barbeiro_nome.html", data=data, horario=horario)
 
 @app.route("/barbeiro/salvar-manual", methods=["POST"])
 def salvar_agendamento_manual():
