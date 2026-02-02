@@ -54,8 +54,8 @@ def gerar_horarios(data, duracao):
 
     return horarios
 
-@app.route("/barbeiro-bloquear", methods=["POST"])
-def barbeiro_bloquear():
+@app.route("/barbeiro-confirmar-bloqueio", methods=["POST"])
+def barbeiro_confirmar_bloqueio():
 
     if "barbeiro" not in session:
         return redirect("/barbeiro-login")
@@ -69,20 +69,6 @@ def barbeiro_bloquear():
     conexao = sqlite3.connect("database.db")
     cursor = conexao.cursor()
 
-    
-    cursor.execute("""
-        SELECT id
-        FROM agendamentos
-        WHERE data = ? AND horario = ?
-    """, (data, horario))
-
-    ocupado = cursor.fetchone()
-
-    if ocupado:
-        conexao.close()
-        return "Esse horário já está ocupado", 400
-
-    
     cursor.execute("""
         INSERT INTO agendamentos (cliente_id, servicos, data, horario)
         VALUES (?, ?, ?, ?)
@@ -92,6 +78,33 @@ def barbeiro_bloquear():
     conexao.close()
 
     return redirect("/barbeiro")
+
+@app.route("/barbeiro-bloquear", methods=["POST"])
+def barbeiro_bloquear():
+
+    if "barbeiro" not in session:
+        return redirect("/barbeiro-login")
+
+    data = request.form["data"]
+    horario = request.form["horario"]
+
+    conexao = sqlite3.connect("database.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        SELECT id
+        FROM agendamentos
+        WHERE data = ? AND horario = ?
+    """, (data, horario))
+
+    ocupado = cursor.fetchone()
+
+    conexao.close()
+
+    if ocupado:
+        return "Esse horário já está ocupado", 400
+
+    return render_template("barbeiro_nome.html", data=data, horario=horario)
 
 
 @app.route("/barbeiro-login", methods=["GET","POST"])
