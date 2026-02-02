@@ -223,9 +223,25 @@ def barbeiro():
     """)
 
     agendamentos = cursor.fetchall()
+
+    agendamentos_formatados = []
+
+    for a in agendamentos:
+    data_iso = a[1]  
+    data_br = datetime.strptime(data_iso, "%Y-%m-%d").strftime("%d/%m/%Y")
+
+    agendamentos_formatados.append((
+        a[0],  
+        data_br,
+        a[2],   
+        a[3],   
+        a[4],   
+        a[5]   
+    ))
+    
     conexao.close()
 
-    return render_template("barbeiro.html", agendamentos=agendamentos)
+    return render_template("barbeiro.html", agendamentos=agendamentos_formatados)
 
 
 @app.route("/", methods=["GET", "POST"])
