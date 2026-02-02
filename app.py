@@ -216,7 +216,7 @@ def barbeiro():
 
     cursor.execute("""
         SELECT agendamentos.id, agendamentos.data,
-               agendamentos.horario, agendamentos.servicos, clientes.nome, clientes.telefone,
+               agendamentos.horario, agendamentos.servicos, clientes.nome, clientes.telefone
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
         ORDER BY agendamentos.data ASC, agendamentos.horario ASC
