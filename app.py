@@ -69,6 +69,7 @@ def barbeiro_bloquear():
     conexao = sqlite3.connect("database.db")
     cursor = conexao.cursor()
 
+    
     cursor.execute("""
         SELECT id
         FROM agendamentos
@@ -81,6 +82,7 @@ def barbeiro_bloquear():
         conexao.close()
         return "Esse horário já está ocupado", 400
 
+    
     cursor.execute("""
         INSERT INTO agendamentos (cliente_id, servicos, data, horario)
         VALUES (?, ?, ?, ?)
@@ -89,30 +91,8 @@ def barbeiro_bloquear():
     conexao.commit()
     conexao.close()
 
-    return render_template("barbeiro_nome.html", data=data, horario=horario)
-
-@app.route("/barbeiro-salvar-bloqueio", methods=["POST"])
-def barbeiro_salvar_bloqueio():
-
-    if "barbeiro" not in session:
-        return redirect("/barbeiro-login")
-
-    data = request.form["data"]
-    horario = request.form["horario"]
-    nome = request.form["nome"]
-
-    conexao = sqlite3.connect("database.db")
-    cursor = conexao.cursor()
-
-    cursor.execute("""
-        INSERT INTO agendamentos (cliente_id, servicos, data, horario)
-        VALUES (?, ?, ?, ?)
-    """, (None, f"Cliente manual: {nome}", data, horario))
-
-    conexao.commit()
-    conexao.close()
-
     return redirect("/barbeiro")
+
 
 @app.route("/barbeiro-login", methods=["GET","POST"])
 def barbeiro_login():
