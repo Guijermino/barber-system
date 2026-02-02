@@ -223,6 +223,7 @@ def barbeiro():
     """)
 
     agendamentos = cursor.fetchall()
+    conexao.close()
 
     agendamentos_formatados = []
 
@@ -238,8 +239,6 @@ def barbeiro():
         a[4],   
         a[5]   
     ))
-    
-    conexao.close()
 
     return render_template("barbeiro.html", agendamentos=agendamentos_formatados)
 
