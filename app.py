@@ -210,9 +210,8 @@ def barbeiro():
     if "barbeiro" not in session:
         return redirect("/barbeiro-login")
 
-    hoje = date.today().isoformat()  
-
     conexao = sqlite3.connect("database.db")
+    conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
 
     cursor.execute("""
@@ -221,12 +220,12 @@ def barbeiro():
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
         ORDER BY agendamentos.data ASC, agendamentos.horario ASC
-    """, (hoje,))
+    """)
 
     agendamentos = cursor.fetchall()
     conexao.close()
 
-    return render_template("barbeiro.html", agendamentos=agendamentos, hoje=hoje)
+    return render_template("barbeiro.html", agendamentos=agendamentos)
 
 
 @app.route("/", methods=["GET", "POST"])
