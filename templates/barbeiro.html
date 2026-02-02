@@ -49,10 +49,10 @@ h2{
 <h1>Agenda do Barbeiro</h1>
 
 <form method="POST" action="/barbeiro-bloquear" style="margin-bottom:20px;">
-    <input type="date" name="data" required>
-    <input type="time" name="horario" required>
+    <input type="date" name="data" value="{{ data }}">
+    <input type="time" name="horario" value="{{ horario }}">
     <button style="background:#e60000;color:white;padding:10px;border:none;border-radius:8px;">
-        ➕ Bloquear horário (WhatsApp)
+        Bloquear horário (WhatsApp)
     </button>
 </form>
     
