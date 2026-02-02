@@ -34,9 +34,44 @@ def barbeiro_bloquear():
     cursor = conexao.cursor()
 
     cursor.execute("""
+        SELECT id
+        FROM agendamentos
+        WHERE data = ? AND horario = ?
+    """, (data, horario))
+
+    ocupado = cursor.fetchone()
+
+    if ocupado:
+        conexao.close()
+        return "❌ Esse horário já está ocupado", 400
+
+    cursor.execute("""
         INSERT INTO agendamentos (cliente_id, servicos, data, horario)
         VALUES (?, ?, ?, ?)
-    """, (0, "HORÁRIO BLOQUEADO", data, horario))
+    """, (None, "CLIENTE WHATSAPP", data, horario))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect("/barbeiro")
+
+@app.route("/barbeiro/salvar-manual", methods=["POST"])
+def salvar_agendamento_manual():
+
+    if "barbeiro" not in session:
+        return redirect("/barbeiro-login")
+
+    nome = request.form.get("nome")
+    data = request.form.get("data")
+    horario = request.form.get("horario")
+
+    conexao = sqlite3.connect("database.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        INSERT INTO agendamentos (cliente_id, servicos, data, horario)
+        VALUES (?, ?, ?, ?)
+    """, (None, f"Cliente manual: {nome}", data, horario))
 
     conexao.commit()
     conexao.close()
