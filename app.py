@@ -202,8 +202,6 @@ def sucesso():
         horario=agendamento[2]
     )
 
-from datetime import date
-
 @app.route("/barbeiro")
 def barbeiro():
 
