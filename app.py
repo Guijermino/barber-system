@@ -7,6 +7,39 @@ import uuid
 app = Flask(__name__)
 app.secret_key = "chave_super_secreta_123"
 
+def criar_cliente_whatsapp():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT id FROM clientes WHERE email = 'whatsapp@barber'")
+    existe = cur.fetchone()
+
+    if not existe:
+        cur.execute("""
+            INSERT INTO clientes (nome, email, telefone, sexo, data_nascimento, senha)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            "Cliente WhatsApp",
+            "whatsapp@barber",
+            "000000000",
+            "N",
+            "1900-01-01",
+            "BLOQUEADO"
+        ))
+        con.commit()
+
+    con.close()
+    
+criar_cliente_whatsapp()
+
+def get_cliente_whatsapp_id():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    cur.execute("SELECT id FROM clientes WHERE email='whatsapp@barber'")
+    id = cur.fetchone()[0]
+    con.close()
+    return id
+
 def gerar_horarios(data, duracao):
     horarios = []
     inicio = 8 * 60   
@@ -29,6 +62,9 @@ def barbeiro_bloquear():
 
     data = request.form["data"]
     horario = request.form["horario"]
+    nome = request.form["nome"]
+
+    cliente_whatsapp_id = get_cliente_whatsapp_id()
 
     conexao = sqlite3.connect("database.db")
     cursor = conexao.cursor()
@@ -43,12 +79,12 @@ def barbeiro_bloquear():
 
     if ocupado:
         conexao.close()
-        return "❌ Esse horário já está ocupado", 400
+        return "Esse horário já está ocupado", 400
 
     cursor.execute("""
         INSERT INTO agendamentos (cliente_id, servicos, data, horario)
         VALUES (?, ?, ?, ?)
-    """, (None, "CLIENTE WHATSAPP", data, horario))
+    """, (cliente_whatsapp_id, f"WhatsApp - {nome}", data, horario))
 
     conexao.commit()
     conexao.close()
