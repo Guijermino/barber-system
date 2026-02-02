@@ -21,6 +21,28 @@ def gerar_horarios(data, duracao):
 
     return horarios
 
+@app.route("/barbeiro-bloquear", methods=["POST"])
+def barbeiro_bloquear():
+
+    if "barbeiro" not in session:
+        return redirect("/barbeiro-login")
+
+    data = request.form["data"]
+    horario = request.form["horario"]
+
+    conexao = sqlite3.connect("database.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        INSERT INTO agendamentos (cliente_id, servicos, data, horario)
+        VALUES (?, ?, ?, ?)
+    """, (0, "HORÁRIO BLOQUEADO", data, horario))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect("/barbeiro")
+
 @app.route("/barbeiro-login", methods=["GET","POST"])
 def barbeiro_login():
 
@@ -194,8 +216,8 @@ def barbeiro():
     cursor = conexao.cursor()
 
     cursor.execute("""
-        SELECT agendamentos.horario, agendamentos.servicos,
-               clientes.nome, clientes.telefone, agendamentos.id
+        SELECT agendamentos.id, agendamentos.data,
+               agendamentos.horario, agendamentos.servicos, clientes.nome, clientes.telefone,
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
         ORDER BY agendamentos.data ASC, agendamentos.horario ASC
