@@ -198,8 +198,7 @@ def barbeiro():
                clientes.nome, clientes.telefone, agendamentos.id
         FROM agendamentos
         JOIN clientes ON agendamentos.cliente_id = clientes.id
-        WHERE agendamentos.data = ?
-        ORDER BY agendamentos.horario
+        ORDER BY agendamentos.data ASC, agendamentos.horario ASC
     """, (hoje,))
 
     agendamentos = cursor.fetchall()
