@@ -38,13 +38,14 @@ button{
 <body>
 
 <div class="box">
-    <h3>Bloquear horário</h3>
-    <p>📅 {{ data }}<br>⏰ {{ horario }}</p>
+    <h2>Nome do cliente</h2>
 
-    <form method="POST" action="/barbeiro/salvar-manual">
+    <form method="POST" action="/barbeiro-salvar-bloqueio">
         <input type="hidden" name="data" value="{{ data }}">
         <input type="hidden" name="horario" value="{{ horario }}">
+        
         <input type="text" name="nome" placeholder="Nome do cliente" required>
+        
         <button>Salvar</button>
     </form>
 </div>
