@@ -38,16 +38,20 @@ button{
 <body>
 
 <div class="box">
-    <h2>Nome do cliente</h2>
+    <h2>Bloquear horário</h2>    
+    
+    <p>Data: {{ data }}</p>
+    <p>Horário: {{ horario }}</p>
+    
+    <form method="POST" action="/barbeiro-confirmar-bloqueio">
+        <input type="hidden" name="data" value="{{ data }}">
+        <input type="hidden" name="horario" value="{{ horario }}">
 
-    <form method="POST" action="/barbeiro-bloquear">
-        <input type="hidden" name="data" required>
-        <input type="hidden" name="horario" required>
-        
-        <input type="text" name="nome" placeholder="Nome do cliente" required>
-        
-        <button>Salvar</button>
-    </form>
+        <label>Nome do cliente</label>
+        <input type="text" name="nome" required>
+
+        <button type="submit">Confirmar bloqueio</button>
+</form>
 </div>
 
 </body>
