@@ -40,9 +40,9 @@ button{
 <div class="box">
     <h2>Nome do cliente</h2>
 
-    <form method="POST" action="/barbeiro-salvar-bloqueio">
-        <input type="hidden" name="data" value="{{ data }}">
-        <input type="hidden" name="horario" value="{{ horario }}">
+    <form method="POST" action="/barbeiro-bloquear">
+        <input type="hidden" name="data" required>
+        <input type="hidden" name="horario" required>
         
         <input type="text" name="nome" placeholder="Nome do cliente" required>
         
